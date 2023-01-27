@@ -4,30 +4,31 @@ import axios from 'axios'
 
 const UploadText = () => {
   //const [newFile, setNewFile] = useState('')
-  const [selectedFile, setSelectedFile] = useState();
+  	//const [selectedFile, setSelectedFile] = useState();
+	const [selectedFile, setSelectedFile] = useState({
+		name: '',
+	});
 	const [isSelected, setIsSelected] = useState(false);
 
 	const changeHandler = (event) => {
-		setSelectedFile(event.target.files[0]);
+		setSelectedFile(event.target.files);
 		setIsSelected(true);
 	};
 
-	const handleSubmission = async () => {
-		const formData = new FormData();
-		formData.append('File', selectedFile);
+	const handleSubmission = async (e) => {
+		e.preventDefault()
 		console.log(selectedFile)
-		fetch(`/fileupload`,{
-				method: 'POST',
-				body: selectedFile,
-		})
-    .then((response) => response.json())
-		.then((result) => {console.log('Success:', result);})
-		.catch((error) => {console.error('Error:', error);})
-		
-    	// axios.post(`/fileupload`, selectedFile)
-		// // .then((response) => response.json())
+		// fetch(`/fileupload`,{
+		// 		method: 'POST',
+		// 		body: selectedFile,
+		// })
+    	// .then((response) => response.json())
 		// .then((result) => {console.log('Success:', result);})
 		// .catch((error) => {console.error('Error:', error);})
+		
+    	axios.post(`/fileupload`, selectedFile.File, { Content_Types: 'application/json' })
+		.then((result) => {console.log('Success:', result);})
+		.catch((error) => {console.error('Error:', error);})
 	};
 
   return (
