@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const path = require('path');
-const uploader = require('../utils/utilMulter')
 const textController = require('../controller/textController');
 
 let timo;
@@ -11,15 +9,15 @@ const mfStorage = multer.diskStorage({
       cb(null, 'uploads')
     },
     filename: function (req, file, cb) {
-        console.log(file)
         timo = Date.now()
         req.timoeto = timo
+
         cb(null, timo+'-'+file.originalname)
     }
   })
 
 const  allowedFiles = function(req, file, cb) {
-    // Accept images only
+    // Accept txt only
     if (!file.originalname.match(/\.(txt)$/)) {
         req.fileValidationError = 'Only txt file type are allowed!';
         return cb(new Error('Only txt file type  are allowed!'), false);

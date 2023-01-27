@@ -57,11 +57,12 @@ exports.getSingleFileAvailableForManipulation = async (req, res, next) => {
 
 exports.uploadFileForAnalysis = async (req, res, next)=>{
     try{
-        //console.log(req.body)
+
+        console.log(req.file)
+        console.log(req.timoeto)
         const file = await File.create({
             name:  req.timoeto+'-'+req.file.originalname
         })
-        //console.log(newFile.name)
         res.json({
             status: 'Message',
             message: 'File created successfully!!',

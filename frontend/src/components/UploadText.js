@@ -5,47 +5,40 @@ import axios from 'axios'
 const UploadText = () => {
   //const [newFile, setNewFile] = useState('')
   	//const [selectedFile, setSelectedFile] = useState();
-	const [selectedFile, setSelectedFile] = useState({
-		name: '',
-	});
+	const [selectedFile, setSelectedFile] = useState('');
 	const [isSelected, setIsSelected] = useState(false);
 
 	const changeHandler = (event) => {
-		setSelectedFile(event.target.files);
-		setIsSelected(true);
+		setSelectedFile(event.target.value);
+		//setIsSelected(true);
 	};
 
 	const handleSubmission = async (e) => {
 		e.preventDefault()
-		console.log(selectedFile)
-		// fetch(`/fileupload`,{
-		// 		method: 'POST',
-		// 		body: selectedFile,
-		// })
-    	// .then((response) => response.json())
-		// .then((result) => {console.log('Success:', result);})
-		// .catch((error) => {console.error('Error:', error);})
-		
-    	axios.post(`/fileupload`, selectedFile.File, { Content_Types: 'application/json' })
+		let form = document.getElementById('form');
+		let formData = new FormData(form)
+    	axios.post(`/fileupload`, formData )
 		.then((result) => {console.log('Success:', result);})
 		.catch((error) => {console.error('Error:', error);})
 	};
 
   return (
     <div className='upload-text-container'>
-      <label htmlFor='files'>Upload file: to Analyze: </label>
-      <input type="file" id='files' name="files" onChange={changeHandler} />
-			{ isSelected ? (
+		<form encType="multipart/form-data" onSubmit={handleSubmission} id="form">
+			<label htmlFor='files'>Upload file: to Analyze: </label>
+			<input type="file" id='files' name="files" value={selectedFile} onChange={changeHandler} />
+			<button type="submit">Upload</button>
+		</form>
+
+			{/* { isSelected ? (
 				<div>
-					<p>Filename: {selectedFile.name}</p>
-					<p>Filetype: {selectedFile.type}</p>
-					<p>Size in bytes: {selectedFile.size}</p>
+					<p>originalname: {selectedFile.name.name}</p>
+					<p>Filetype: {selectedFile.name.type}</p>
+					<p>Size in bytes: {selectedFile.name.size}</p>
 				</div>
 			) : (
 				<p>Select a file to show details</p>
-			)}
-
-      <button onClick={handleSubmission}>Upload</button>
+			)} */}
       <br/>
       <br/>
     </div>
