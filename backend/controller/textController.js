@@ -9,16 +9,17 @@ exports.getTextManipulationHome = async (req, res, next)=>{
     }
 }
 
+
 exports.uploadFileForAnalysis = async (req, res, next)=>{
     try{
         console.log(req.file.originalname)
-        const newFile = await File.create({
-            name: Date.now()+'-'+req.file.originalname
+        const file = await File.create({
+            name: Date.now()+'-'+ req.file.originalname
         })
-        
+        //console.log(newFile.name)
         res.json({
             status: 'Message',
-            message: 'File created successfully!!'
+            message: 'File created successfully!!',
         })
     } catch(err){
         console.log(err)

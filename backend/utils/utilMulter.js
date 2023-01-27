@@ -3,16 +3,15 @@ module.exports.files={
     storage:function(){
         const mfStorage = multer.diskStorage({
         destination: function (req, file, cb) {
-          cb(null, 'filesupload')
+          cb(null, '/fileupload')
         },
         filename: function (req, file, cb) {
-            console.log('storagePart'+file.originalname)
-            const ext = file.mimetype.split('/')[1]
+            console.log(file.originalname)
+            const ext = file.originalname.split('/')[1]
             cb(null, `${Date.now()}-${file.originalname}.${ext}`)
         }
       })
-      
-      return storage;
+      return mfStorage;
     },
     allowedFiles:function(req, file, cb) {
         // Accept images only
