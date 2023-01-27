@@ -6,18 +6,25 @@ const UploadText = () => {
   //const [newFile, setNewFile] = useState('')
   	//const [selectedFile, setSelectedFile] = useState();
 	const [selectedFile, setSelectedFile] = useState({
-		name: '',
+		fieldname: 'files',
+		originalname: '',
+		encoding: '7bit',
+		mimetype: 'text/plain'
 	});
 	const [isSelected, setIsSelected] = useState(false);
 
 	const changeHandler = (event) => {
-		setSelectedFile(event.target.files);
+		setSelectedFile({...selectedFile, originalname:  event.target.files[0]});
 		setIsSelected(true);
 	};
 
 	const handleSubmission = async (e) => {
 		e.preventDefault()
+		console.log('----')
 		console.log(selectedFile)
+		console.log('----')
+		let sendFile = selectedFile
+		console.log(sendFile)
 		// fetch(`/fileupload`,{
 		// 		method: 'POST',
 		// 		body: selectedFile,
@@ -26,7 +33,7 @@ const UploadText = () => {
 		// .then((result) => {console.log('Success:', result);})
 		// .catch((error) => {console.error('Error:', error);})
 		
-    	axios.post(`/fileupload`, selectedFile.File, { Content_Types: 'application/json' })
+    	axios.post(`/fileupload`, sendFile, { Content_Types: 'application/json' })
 		.then((result) => {console.log('Success:', result);})
 		.catch((error) => {console.error('Error:', error);})
 	};
@@ -37,7 +44,7 @@ const UploadText = () => {
       <input type="file" id='files' name="files" onChange={changeHandler} />
 			{ isSelected ? (
 				<div>
-					<p>Filename: {selectedFile.name}</p>
+					<p>originalname: {selectedFile.originalname.name}</p>
 					<p>Filetype: {selectedFile.type}</p>
 					<p>Size in bytes: {selectedFile.size}</p>
 				</div>
