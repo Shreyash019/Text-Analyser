@@ -16,30 +16,28 @@ const TextHome = () => {
   // Handle File Change
   const changeHandler = (event) => {
 		setSelectedFile(event.target.value);
-		//setIsSelected(true);
 	};
 
 	const handleSubmission = async (e) => {
 		e.preventDefault()
 		let form = document.getElementById('form');
 		let formData = new FormData(form)
-    	axios.post(`/fileupload`, formData )
-		.then((result) => {setIdd(result);})
+    axios.post(`/fileupload`, formData )
+    .then((res) => {return res.data.id})
+    .then((de)=> fetchData(de))
 		.catch((error) => {console.error('Error:', error);})
 	};
-
-  // Handdle upload button click
+  
   const handleOnClick = async (event) =>{
     alert('File Uploaded')
-    fetchData();
   }
 
   // Sending data to frontend
-  const fetchData = async () =>{
+  const fetchData = async (id) =>{
+    console.log(id)
     await axios.get(`/data`)
     .then(res =>{return res.data})
     .then(data=> { setGetData(data)})
-    console.log(getData)
   }
 
   return (
@@ -51,7 +49,7 @@ const TextHome = () => {
               <p>Characters: {getData.Characters}, Words: {getData.Words}, Sentences: {getData.Sentences}</p>
               <button onClick={()=> alert('Analysed')}>Analyse</button>
               <br/>
-              <p>Noun: 0 (0%), Verb: 0 (0%), Adjective: 0 (0%), Adver: 0 (0%)</p>
+              <p>Noun: {getData.Nouns} (0%), Verb: {getData.Verbs} (0%), Adjective: 0 (0%), Adver: 0 (0%)</p>
               <br/><hr/>
           </div>
           <br/>
