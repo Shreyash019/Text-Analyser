@@ -29,8 +29,8 @@ const upload = multer({
     storage: mfStorage,
     fileFilter: allowedFiles 
 })
-router.route('/').get(textController.getAllFileAvailableForManipulation)
-router.route('/:id').get(textController.getSingleFileAvailableForManipulation)
+//router.route('/').get(textController.getAllFileAvailableForManipulation)
+router.route('/data').get(textController.getSingleFileAvailableForManipulation)
 router.route('/fileupload').post(upload.single('files'), textController.uploadFileForAnalysis)
 
 module.exports = router;

@@ -29,16 +29,6 @@ const UploadText = () => {
 			<input type="file" id='files' name="files" value={selectedFile} onChange={changeHandler} />
 			<button type="submit">Upload</button>
 		</form>
-
-			{/* { isSelected ? (
-				<div>
-					<p>originalname: {selectedFile.name.name}</p>
-					<p>Filetype: {selectedFile.name.type}</p>
-					<p>Size in bytes: {selectedFile.name.size}</p>
-				</div>
-			) : (
-				<p>Select a file to show details</p>
-			)} */}
       <br/>
       <br/>
     </div>
