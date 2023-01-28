@@ -1,7 +1,7 @@
 const File = require('../model/textModel');
 const fs = require('fs');
 
-
+let txtId = undefined;
 exports.getAllFileAvailableForManipulation = async (req, res, next)=>{
     try{
         const getData = await File.find()
@@ -24,7 +24,7 @@ exports.getSingleFileAvailableForManipulation = async (req, res, next) => {
         let wordCount = undefined;
         let sentanceCount = undefined
         const id = "63d45587fae43aa17c0797a3"
-        const getData = await File.findById(id)
+        const getData = await File.findById({_id: txtId})
         console.log('fileController.download: started')
         const path = ('uploads/'+getData.name)
         var readerStream = fs.createReadStream(path)
@@ -64,9 +64,14 @@ exports.uploadFileForAnalysis = async (req, res, next)=>{
         const file = await File.create({
             name:  req.timoeto+'-'+req.file.originalname
         })
+        txtId = file._id
+        console.log('->', txtId)
         res.json({
             status: 'Message',
             message: 'File created successfully!!',
+            data: {
+                file
+            }
         })
     } catch(err){
         console.log(err)
