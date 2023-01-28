@@ -1,0 +1,49 @@
+.footer-container{
+    background-color: antiquewhite;
+}
+
+
+.top-footer{
+    background-color: rgb(121, 192, 242);
+    width: 100%;
+    min-height: 110px;
+    height: auto;
+}
+.top-footer-left{
+    width:60%;
+    height:auto;
+    float: left;
+    text-align: center;
+}
+.top-footer-left p{
+    color: white;
+    font-size: 0.9em;
+    font-weight: 700;
+    padding: 5% 0%;
+}
+
+.top-footer-right{
+    width:40%;
+    height:auto;
+    float: left;
+    padding: 0.8% 0%;
+}
+    .top-footer-right p{
+        color: white;
+        font-size: 0.8em;
+        font-weight: 600;
+        padding: 0.2%;
+    }
+
+
+
+.bottom-footer{
+    background-color: rgb(91, 163, 214);
+    color: white;
+    text-align: center;
+}
+.bottom-footer p{
+    padding: 1% 0%;
+    font-size: 1.1em;
+    font-weight: 700;
+}

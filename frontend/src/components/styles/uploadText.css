@@ -2,3 +2,25 @@
     background-color: aliceblue;
     text-align: center;
 }
+
+.upload-text-container form{
+
+}
+
+.upload-text-container label{
+    font-size: 0.8em;
+    font-weight: 500;
+}
+
+.upload-text-container input{
+    color: rgb(91, 70, 70);
+}
+
+.upload-text-container button{
+    background-color: rgb(227, 59, 59);
+    padding: 0.4% 1.5%;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
+}

@@ -23,7 +23,8 @@ exports.getSingleFileAvailableForManipulation = async (req, res, next) => {
         let characterCount = undefined;
         let wordCount = undefined;
         let sentanceCount = undefined
-        const getData = await File.findById(req.params.id)
+        const id = "63d45587fae43aa17c0797a3"
+        const getData = await File.findById(id)
         console.log('fileController.download: started')
         const path = ('uploads/'+getData.name)
         var readerStream = fs.createReadStream(path)
@@ -43,7 +44,7 @@ exports.getSingleFileAvailableForManipulation = async (req, res, next) => {
                 Charcters: characterCount,
                 Words: wordCount,
                 Sentences: sentanceCount,
-                data: data
+                data: {data}
             })
             //readData = String(rdata)
         })
