@@ -1,34 +1,72 @@
 import React, {useState, useEffect} from 'react';
 import './styles/textHome.css';
+import './styles/uploadText.css';
 import axios from 'axios'
 
 const TextHome = () => {
-  const [getData, setGetData] = useState({})
-
-  useEffect(()=>{
-    const fetchData = async () =>{
-      await axios.get(`/data`)
-      .then(res =>{return res.data})
-      .then(getData=> {
-        //setGetData(res)
-        console.log(getData)
-      })
+  const [getData, setGetData] = useState({
+    data: {
+      data: ''
     }
-    fetchData()
-  },[])
+  });
+  const [idd, setIdd] = useState()
+
+  const [selectedFile, setSelectedFile] = useState('');
+
+  // Handle File Change
+  const changeHandler = (event) => {
+		setSelectedFile(event.target.value);
+		//setIsSelected(true);
+	};
+
+	const handleSubmission = async (e) => {
+		e.preventDefault()
+		let form = document.getElementById('form');
+		let formData = new FormData(form)
+    	axios.post(`/fileupload`, formData )
+		.then((result) => {setIdd(result);})
+		.catch((error) => {console.error('Error:', error);})
+	};
+
+  // Handdle upload button click
+  const handleOnClick = async (event) =>{
+    alert('File Uploaded')
+    fetchData();
+  }
+
+  // Sending data to frontend
+  const fetchData = async () =>{
+    await axios.get(`/data`)
+    .then(res =>{return res.data})
+    .then(data=> { setGetData(data)})
+    console.log(getData)
+  }
+
   return (
-    <div className='texthome-container'>
-        <br/><h3>Analyse your text here</h3>
-        <div className='textare-input-Analyser'>
-            <textarea placeholder='Enter your text here'></textarea><br/>
-            <button onClick={()=> alert('Analased')}>Analyse</button>
-            <br/>
-            <p>Total words: </p>
-            <p>Noun: 0 (0%), Verb: 0 (0%), Adjective: 0 (0%), Adver: 0 (0%)</p>
-            <br/><hr/>
-        </div>
+    <>
+      <div className='texthome-container'>
+          <br/><h3>Analyse Text Document by uploading text file</h3>
+          <div className='textare-input-Analyser'>
+              <textarea placeholder='Enter your text here' onChange={(e)=> e.target.value} value={(!getData.data.data)? 'Upload text file first' : getData.data.data} disabled> </textarea><br/>
+              <p>Characters: {getData.Characters}, Words: {getData.Words}, Sentences: {getData.Sentences}</p>
+              <button onClick={()=> alert('Analysed')}>Analyse</button>
+              <br/>
+              <p>Noun: 0 (0%), Verb: 0 (0%), Adjective: 0 (0%), Adver: 0 (0%)</p>
+              <br/><hr/>
+          </div>
+          <br/>
+      </div>
+
+      <div className='upload-text-container'>
+      <form encType="multipart/form-data" onSubmit={handleSubmission} id="form">
+        <label htmlFor='files'>Upload text file to Analyze: </label>
+        <input type="file" id='files' name="files" value={selectedFile} onChange={changeHandler} />
+        <button type="submit" onClick={handleOnClick}>Upload</button>
+      </form>
         <br/>
-    </div>
+        <br/>
+      </div>
+    </>
   )
 }
 
