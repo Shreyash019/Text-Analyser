@@ -1,5 +1,6 @@
 const File = require('../model/textModel');
 const fs = require('fs');
+var pos = require('pos');
 
 let txtId = undefined;
 exports.getAllFileAvailableForManipulation = async (req, res, next)=>{
@@ -22,8 +23,23 @@ exports.getSingleFileAvailableForManipulation = async (req, res, next) => {
         let data = ''
         let characterCount = undefined;
         let wordCount = undefined;
-        let sentanceCount = undefined
-        const id = "63d45587fae43aa17c0797a3"
+        let sentanceCount = undefined;
+        let nouns = 0;
+        let adjectives = 0;
+        let adverbs = 0;
+        let verbs = 0;
+        if(txtId===undefined){
+            return res.json({
+                status: "Success",
+                Charcters: 0,
+                Words: 0,
+                Sentences: 0,
+                Nouns: 0,
+                Verbs: 0,
+                id: '',
+                data: ''
+            })
+        }
         const getData = await File.findById({_id: txtId})
         console.log('fileController.download: started')
         const path = ('uploads/'+getData.name)
@@ -44,7 +60,12 @@ exports.getSingleFileAvailableForManipulation = async (req, res, next) => {
                 Charcters: characterCount,
                 Words: wordCount,
                 Sentences: sentanceCount,
-                data: {data}
+                Nouns: nouns,
+                Verbs: verbs,
+                id: getData._id,
+                data: {
+                    data
+                }
             })
             //readData = String(rdata)
         })
@@ -58,17 +79,16 @@ exports.getSingleFileAvailableForManipulation = async (req, res, next) => {
 
 exports.uploadFileForAnalysis = async (req, res, next)=>{
     try{
-
-        console.log(req.file)
-        console.log(req.timoeto)
         const file = await File.create({
             name:  req.timoeto+'-'+req.file.originalname
         })
+        console.log(file)
         txtId = file._id
         console.log('->', txtId)
         res.json({
             status: 'Message',
             message: 'File created successfully!!',
+            id: txtId,
             data: {
                 file
             }

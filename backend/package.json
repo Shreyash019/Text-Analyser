@@ -20,6 +20,7 @@
     "node-stream-zip": "^1.15.0",
     "nodemon": "^2.0.20",
     "pdfreader": "^3.0.0",
+    "pos": "^0.4.2",
     "xlsx": "^0.18.5"
   }
 }
