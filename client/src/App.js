@@ -1,11 +1,14 @@
 import './App.css';
-import GrammerEditor from './screens/grammerComponent/GrammerEditor';
+import EntryGateway from './screens/EntryGateway';
+import {Toaster} from 'react-hot-toast';
+
 
 function App() {
   return (
-    <div className="App">
-      <p className=''>Welcome</p>
-    </div>
+    <>
+      <EntryGateway />
+      <Toaster/>
+    </>
   );
 }
 
